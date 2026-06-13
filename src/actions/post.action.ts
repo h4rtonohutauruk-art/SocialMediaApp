@@ -165,7 +165,7 @@ export const addComment = async (postId: string, content: string) => {
     if (!post) throw new Error("Post not found");
 
     const [comment] = await prisma.$transaction(async (tx) => {
-      const newComment = await prisma.comment.create({
+      const newComment = await tx.comment.create({
         data: {
           content,
           authorId: userId,
