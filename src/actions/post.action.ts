@@ -164,7 +164,7 @@ export const addComment = async (postId: string, content: string) => {
 
     if (!post) throw new Error("Post not found");
 
-    const [comment] = await prisma.$transaction(async (tx) => {
+    const comment = await prisma.$transaction(async (tx) => {
       const newComment = await tx.comment.create({
         data: {
           content,
@@ -185,7 +185,7 @@ export const addComment = async (postId: string, content: string) => {
           },
         });
       }
-      return [newComment];
+      return newComment;
     });
     // revalidatePath(`/post/${postId}`);
     revalidatePath("/");
