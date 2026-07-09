@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { getCurrentLocation } from "@/lib/geolocation";
 import { SignInButton, useUser } from "@clerk/nextjs";
 import { format } from "date-fns";
 import {
@@ -54,6 +55,7 @@ const ProfilePageClient = ({
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [isFollowing, setIsFollowing] = useState(initialIsFOllowing);
   const [isUpdatingFollow, setIsUpdatingFollow] = useState(false);
+  const [location, setLocation] = useState<any>(null);
 
   const [editForm, setEditForm] = useState({
     name: user.name || "",
@@ -61,6 +63,15 @@ const ProfilePageClient = ({
     location: user.location || "",
     website: user.website || "",
   });
+
+  const handleLocation = async () => {
+    try {
+      const result = await getCurrentLocation();
+      setLocation(result);
+    } catch (error) {
+      console.log("Error for geolocation", error);
+    }
+  };
 
   const handleEditSubmit = async () => {
     const formData = new FormData();
@@ -296,6 +307,17 @@ const ProfilePageClient = ({
                   }
                   placeholder="Where are you based?"
                 />
+              </div>
+              <div className=" space-y-2">
+                <Label>Current Location</Label>
+                <Button onClick={handleLocation}>Get Location</Button>
+
+                {location && (
+                  <>
+                    <p>Latitute : {location.latitute}</p>
+                    <p>Latitute : {location.longitude}</p>
+                  </>
+                )}
               </div>
               <div className="space-y-2">
                 <Label>Website</Label>

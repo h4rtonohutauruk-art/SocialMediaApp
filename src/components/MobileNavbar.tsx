@@ -20,9 +20,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 const MobileNavbar = () => {
   const { theme, setTheme } = useTheme();
   const { isSignedIn } = useAuth();
+  const { currentUser, isLoading } = useCurrentUser();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   return (
     <div className=" flex md:hidden items-center space-x-2">
@@ -64,7 +66,7 @@ const MobileNavbar = () => {
                   className="flex items-center gap-3 justify-start"
                   asChild
                 >
-                  <Link href={"/notification"}>
+                  <Link href={"/notifications"}>
                     <BellIcon className=" w-4 h-4" />
                     Notifications
                   </Link>
@@ -74,7 +76,7 @@ const MobileNavbar = () => {
                   className="flex items-center gap-3 justify-start"
                   asChild
                 >
-                  <Link href={"/profile"}>
+                  <Link href={`/profile/${currentUser?.username}`}>
                     <UserIcon className=" w-4 h-4" />
                     Profile
                   </Link>
@@ -85,7 +87,7 @@ const MobileNavbar = () => {
                     className="flex items-center gap-3 justify-start"
                     asChild
                   >
-                    <Link href={"/notification"}>
+                    <Link href={"/"}>
                       <LogOutIcon className=" w-4 h-4" />
                       Logout
                     </Link>
