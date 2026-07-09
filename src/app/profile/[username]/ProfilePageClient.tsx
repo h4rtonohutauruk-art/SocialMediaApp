@@ -23,6 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { getCurrentLocation } from "@/lib/geolocation";
+import { Capacitor } from "@capacitor/core";
 import { SignInButton, useUser } from "@clerk/nextjs";
 import { format } from "date-fns";
 import {
@@ -66,8 +67,10 @@ const ProfilePageClient = ({
 
   const handleLocation = async () => {
     try {
+      console.log("calling handlelocation");
       const result = await getCurrentLocation();
       setLocation(result);
+      console.log("this is location:", result);
     } catch (error) {
       console.log("Error for geolocation", error);
     }
@@ -107,6 +110,9 @@ const ProfilePageClient = ({
     currentUser?.emailAddresses[0].emailAddress.split("@")[0] == user.username;
 
   const formattedDate = format(new Date(user.createdAt), "MMMM yyyy");
+
+  console.log("Platform:", Capacitor.getPlatform());
+  console.log("Is Native:", Capacitor.isNativePlatform());
 
   return (
     <div className=" max-w-3xl mx-auto">
