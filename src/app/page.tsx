@@ -3,6 +3,7 @@ import { getDBUserId } from "@/actions/user.action";
 import CreatePost from "@/components/CreatePost";
 import PostCard from "@/components/PostCard";
 import WhoToFollow from "@/components/WhoToFollow";
+import { Capacitor } from "@capacitor/core";
 import { currentUser } from "@clerk/nextjs/server";
 export default async function HomePage() {
   const user = await currentUser();
@@ -12,7 +13,7 @@ export default async function HomePage() {
   console.log("this is post", dbUserId);
   return (
     <div className=" grid grid-cols-1 lg:grid-cols-10 gap-6">
-      <div className=" lg:col-span-6 ">
+      {/* <div className=" lg:col-span-6 ">
         {user ? <CreatePost /> : null}
         <div className=" space-y-6">
           {posts?.map((post) => (
@@ -22,6 +23,11 @@ export default async function HomePage() {
       </div>
       <div className=" hidden lg:block lg:col-span-4 sticky top-20">
         <WhoToFollow />
+      </div> */}
+
+      <div>
+        <h1>Platform : {Capacitor.getPlatform()}</h1>
+        <h1>Native : {String(Capacitor.isNativePlatform())}</h1>
       </div>
 
       {/* <div className=" lg:col-span-4 bg-blue-600">b</div> */}
