@@ -3,30 +3,6 @@ import { Geolocation } from "@capacitor/geolocation";
 
 export async function getCurrentLocation() {
   console.log("call the getCurrentLocation:", Capacitor.getPlatform());
-  // if (Capacitor.isNativePlatform()) {
-  //   console.log("masuk if berarti ini masuk ke native");
-  //   const permission =
-  //   await Geolocation.requestPermissions();
-  //   return await Geolocation.getCurrentPosition();
-  // }
-
-  // return new Promise((resolve, reject) => {
-  //   navigator.geolocation.getCurrentPosition(resolve, reject);
-  // });
-  //   const permission = await Geolocation.checkPermissions();
-
-  //   console.log(permission);
-
-  //   if (permission.location !== "granted") {
-  //     await Geolocation.requestPermissions();
-  //   }
-
-  //   const position = await Geolocation.getCurrentPosition({
-  //     enableHighAccuracy: true,
-  //     timeout: 10000,
-  //   });
-
-  //   return position.coords;
   try {
     if (Capacitor.isNativePlatform()) {
       console.log("masuk if berarti ini masuk ke native");
@@ -35,13 +11,18 @@ export async function getCurrentLocation() {
       console.log(permission);
 
       if (permission.location !== "granted") {
-        await Geolocation.requestPermissions();
+        throw new Error("Location permission denied");
       }
 
       const position = await Geolocation.getCurrentPosition({
         enableHighAccuracy: true,
         timeout: 10000,
       });
+
+      console.log("Position:", position);
+      console.log("Coords:", position.coords);
+      console.log("Latitude:", position.coords.latitude);
+      console.log("Longitude:", position.coords.longitude);
 
       return position.coords;
     }

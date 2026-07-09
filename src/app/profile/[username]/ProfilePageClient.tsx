@@ -56,7 +56,7 @@ const ProfilePageClient = ({
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [isFollowing, setIsFollowing] = useState(initialIsFOllowing);
   const [isUpdatingFollow, setIsUpdatingFollow] = useState(false);
-  const [location, setLocation] = useState<any>(null);
+  const [location, setLocation] = useState<any | null>(null);
 
   const [editForm, setEditForm] = useState({
     name: user.name || "",
@@ -320,8 +320,8 @@ const ProfilePageClient = ({
 
                 {location && (
                   <>
-                    <p>Latitute : {location.latitute}</p>
-                    <p>Latitute : {location.longitude}</p>
+                    <p>Latitude : {location.latitude}</p>
+                    <p>Longitude : {location.longitude}</p>
                   </>
                 )}
               </div>
